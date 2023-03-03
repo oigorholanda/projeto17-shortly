@@ -1,4 +1,10 @@
 import { db } from "../database/database.js";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const secretKey = process.env.JWT_SECRET ?? 'NsmiNcjD6yWJvmBX2Whbd1';
 
 export async function createClient(req, res) {
 

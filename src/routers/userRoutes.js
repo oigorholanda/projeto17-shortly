@@ -4,9 +4,6 @@ import { signinValidate, signupValidate } from "../middlewares/userMiddlewares.j
 
 const router = Router();
 
-router.post("/signup", )
-router.post("/signin",)
-
 router.post('/signup', signupValidate, createClient);
 router.post('/signin', signinValidate, loginClient);
 
