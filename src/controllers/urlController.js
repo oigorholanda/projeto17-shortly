@@ -1,6 +1,6 @@
-import db from '../database/database.js';
+import {db} from '../database/database.js';
 
-export async function getUrlByIdController(req, res){
+export async function getUrlById(req, res){
 
     const {id} = req.params;
 
@@ -14,7 +14,7 @@ export async function getUrlByIdController(req, res){
     }
 }
 
-export async function redirectController(req, res){
+export async function redirectUrl(req, res){
 
     const {shortUrl} = req.params;
 
@@ -30,7 +30,7 @@ export async function redirectController(req, res){
     }
 }
 
-export async function rankingController(req, res){
+export async function ranking(req, res){
 
     try{
         const {rows} = await db.query('SELECT u.id, u.name, COUNT(l.id) AS "linksCount", SUM("visitCount") AS "visitCount" FROM users u LEFT JOIN urls l ON u.id=l."userId" GROUP BY u.id ORDER BY "visitCount" DESC LIMIT 10;');

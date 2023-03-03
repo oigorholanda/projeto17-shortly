@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
 dotenv.config();
 
-import db from "../database/database.js";
+import {db} from '../database/database.js';
 
 const secretKey = process.env.JWT_SECRET ?? 'NsmiNcjD6yWJvmBX2Whbd1';
 

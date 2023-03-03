@@ -1,4 +1,4 @@
-import db from '../database/database.js';
+import {db} from '../database/database.js';
 import {urlSchema} from '../schemas/urlSchema.js';
 
 export function urlValidate(req, res, next){
@@ -9,7 +9,7 @@ export function urlValidate(req, res, next){
     next();
 }
 
-export async function deleteUrlMiddleware(req, res, next){
+export async function deleteUrlValidate(req, res, next){
 
     const {id} = req.params;
     const {userId} = res.locals;

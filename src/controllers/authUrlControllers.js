@@ -1,6 +1,5 @@
 import { nanoid } from "nanoid";
-
-import db from '../database/database.js';
+import {db} from '../database/database.js';
 
 export async function getMyUrls(req, res){
 
