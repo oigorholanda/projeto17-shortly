@@ -25,23 +25,26 @@ export async function loginClient(req, res) {
   const { email, password } = req.body;
 
   try {
-    const { rows } = await db.query("SELECT * FROM users WHERE email=$1;", [
+    const user = await db.query("SELECT * FROM users WHERE email=$1;", [
       email,
     ]);
-    const hash = rows[0]?.password;
-    if (!hash) return res.sendStatus(401);
-    const validPassword = await bcrypt.compare(password, hash);
 
+    const hash = user.rows[0]?.password;
+    if (!hash) return res.sendStatus(401);
+
+    const validPassword = await bcrypt.compare(password, hash);
     if (!validPassword) return res.sendStatus(401);
 
-    const data = await db.query(
-      'INSERT INTO sessions ("userId") VALUES ($1) RETURNING id;',
-      [rows[0].id]
-    );
-    const { id } = data.rows[0];
+    const userId = user.rows[0].id;
+    const token = jwt.sign({ userId }, secretKey);
+    
 
-    const token = jwt.sign({ id }, secretKey);
-    return res.send({ token });
+    const data = await db.query(
+      'INSERT INTO sessions ("userId", token) VALUES ($1, $2) RETURNING id;',
+      [userId, token]
+    );
+
+    return res.send({ data, token });   
   } catch (error) {
     res.status(500).send(`Erro no banco de dados! ${error.message}`);
   }
